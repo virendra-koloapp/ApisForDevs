@@ -10,6 +10,7 @@ import { createDatabaseConnection } from "./db";
 import { adminRouter } from "./routers/admin";
 import { APP_CONFIG } from "./constants";
 import { generateMockData } from "./data";
+import { productsRouter } from "./routers/products";
 
 const app = express();
 app.use(express.json());
@@ -19,10 +20,11 @@ createDatabaseConnection();
 
 const apiRouter = express.Router();
 
+app.use("/api", apiRouter);
+
 apiRouter.use("/accounts", authRouter);
 apiRouter.use("/admin", adminRouter);
-
-app.use("/api", apiRouter);
+apiRouter.use("/products", productsRouter);
 
 app.use(apiErrorHandler);
 

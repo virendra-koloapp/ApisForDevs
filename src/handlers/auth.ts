@@ -29,7 +29,7 @@ export const registerHandler: Handler = async (request, response, next) => {
     }).save();
 
     response.json({
-      message: "login success",
+      message: "User created",
       access_token: createUserToken({
         id: user.id,
         type: user.type,
