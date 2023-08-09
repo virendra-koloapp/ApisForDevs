@@ -1,5 +1,7 @@
 export const COLLECTION_NAMES = {
   USER: "User",
+  CATEGORY: "Category",
+  PRODUCT: "Product",
 };
 
 const required = (key: string) =>

@@ -9,6 +9,7 @@ import { apiErrorHandler } from "./handlers/error-handler";
 import { createDatabaseConnection } from "./db";
 import { adminRouter } from "./routers/admin";
 import { APP_CONFIG } from "./constants";
+import { generateMockData } from "./data";
 
 const app = express();
 app.use(express.json());
@@ -27,4 +28,5 @@ app.use(apiErrorHandler);
 
 app.listen(APP_CONFIG.PORT, () => {
   logger.info(`Express server listening on port ${APP_CONFIG.PORT}`);
+  generateMockData();
 });
