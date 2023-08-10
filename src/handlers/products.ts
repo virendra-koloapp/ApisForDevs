@@ -1,42 +1,30 @@
-import { Handler } from "express";
+import { Handler, json } from "express";
 import { Product } from "../models/product";
+import { Category } from "../models/category";
 
-export const getProductsHandler: Handler = (request, response) => {
+export const getProductsHandler: Handler = async (request, response) => {
   const { query } = request;
 
   const page = Number(query.page || 1);
   const limit = Number(query.limit || 10);
-  const skip = (page - 1) * limit;
   const { q: search, category } = query;
 
-  const filter = {
-    ...(category ? { category } : {}),
-    ...(search
-      ? {
-          $or: [
-            {
-              title: {
-                $regex: search,
-                $options: "i",
-              },
-            },
-            {
-              description: {
-                $regex: search,
-                $options: "i",
-              },
-            },
-          ],
-        }
-      : {}),
-  };
+  const products = await Product.getProducts({
+    query: {
+      category: category as string,
+      limit: limit,
+      page: page,
+      search: search as string,
+    },
+  });
 
-  Product.find(filter)
-    .limit(limit)
-    .skip(skip)
-    .then((products) => {
-      response.json({
-        products,
-      });
-    });
+  response.json({
+    products,
+  });
+};
+export const getCategoriesHandler: Handler = async (request, response) => {
+  const categories = await Category.find();
+  response.json({
+    categories,
+  });
 };

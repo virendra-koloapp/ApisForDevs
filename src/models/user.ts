@@ -1,6 +1,7 @@
-import mongoose, { SchemaTypes } from "mongoose";
+import mongoose, { Document, SchemaTypes } from "mongoose";
 require("mongoose-type-email");
 import { COLLECTION_NAMES } from "../constants";
+import { func } from "joi";
 
 const ADMIN_TYPE = "ADMIN";
 const CUSTOMER_TYPE = "CUSTOMER";
@@ -30,6 +31,13 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    statics: {
+      getUserByEmail(email: string) {
+        return this.findOne({
+          email,
+        });
+      },
+    },
   }
 );
 

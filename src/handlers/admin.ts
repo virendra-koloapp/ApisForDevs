@@ -14,8 +14,10 @@ export const getAllCategoriesHandler: Handler = (request, response) => {
   });
 };
 
-export const getAllProductsHandler: Handler = (request, response) => {
-  Product.find().then((products) => {
+export const getAllProductsHandler: Handler = async (request, response) => {
+  console.log(request.url);
+  Product.getProducts().then((products) => {
+    console.log(products);
     response.json({ products });
   });
 };

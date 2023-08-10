@@ -1,6 +1,18 @@
 import { faker } from "@faker-js/faker";
 import { Category } from "../models/category";
 
+const getImageUrl = () => {
+  return `${faker.image.unsplash.objects(
+    500,
+    500,
+    "product"
+  )}?${faker.datatype.number({
+    min: 0,
+    max: 1000000,
+    precision: 10,
+  })}`;
+};
+
 export const generateProducts = (count: number) =>
   Category.find()
     .then((categories) => categories.map((c) => c.id))
@@ -14,18 +26,20 @@ export const generateProducts = (count: number) =>
           category: faker.helpers.arrayElement(categoryIds),
           active: true,
           description: faker.commerce.productDescription(),
-          images: [
-            {
-              path: "https://in-media.apjonlinecdn.com/catalog/product/cache/b3b166914d87ce343d4dc5ec5117b502/6/V/6V2W1PA-1_T1680320748.png",
+
+          images: new Array(
+            faker.datatype.number({
+              min: 2,
+              max: 10,
+            })
+          )
+            .fill(0)
+            .map((i) => ({
+              path: getImageUrl(),
               external: true,
               _id: faker.database.mongodbObjectId(),
-            },
-            {
-              path: "https://in-media.apjonlinecdn.com/catalog/product/cache/b3b166914d87ce343d4dc5ec5117b502/6/V/6V2W1PA-1_T1680320748.png",
-              external: true,
-              _id: faker.database.mongodbObjectId(),
-            },
-          ],
+            })),
+
           specification: {
             color: faker.color.human(),
             length: faker.datatype.number({ min: 10, max: 50 }),
