@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "aee5634e-f7dd-4207-b011-651fc475a4ce",
+		"name": "store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24921016"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "getAllCategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ADMIN_AUTH}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/api/admin/categories"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ADMIN_AUTH}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/api/admin/products"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{ADMIN_AUTH}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/api/admin/users"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/api/accounts/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456789\", \n    \"name\" : \"virendra patel admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/api/accounts/register"
+			},
+			"response": []
+		},
+		{
+			"name": "getProducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/products?limit=5&page=1&category=64d3b9d7b397310ba2aa4722&q=car",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"products"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "category",
+							"value": "64d3b9d7b397310ba2aa4722"
+						},
+						{
+							"key": "q",
+							"value": "car"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{ADMIN_AUTH}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{HOST}}/api/orders"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "localhost:3000",
+			"type": "string"
+		}
+	]
+}
