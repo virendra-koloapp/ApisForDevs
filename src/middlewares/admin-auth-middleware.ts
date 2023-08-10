@@ -5,23 +5,31 @@ import { USER_TYPES } from "../constants";
 import { set } from "lodash";
 
 export const adminAuthMiddleware: Handler = (request, response, next) => {
-  const token = getTokenFromHeaders(request.headers);
+  try {
+    const token = getTokenFromHeaders(request.headers);
 
-  const sendError = () => {
-    response.status(401);
-    return next(new ApiError());
-  };
+    const sendError = () => {
+      response.status(401);
+      return next(new ApiError());
+    };
 
-  if (!token) {
+    if (!token) {
+      return sendError();
+    }
+
+    const payload = getPayloadFromToken(token);
+
+    if (!payload) {
+      return sendError();
+    }
+
+    if (payload.type == USER_TYPES.USER_TYPE_ADMIN) {
+      set(request, "user.id", payload.id);
+      return next();
+    }
+
     return sendError();
+  } catch (error: any) {
+    response.json(error.message);
   }
-
-  const payload = getPayloadFromToken(token);
-
-  if (payload.type == USER_TYPES.USER_TYPE_ADMIN) {
-    set(request, "user.id", payload.id);
-    return next();
-  }
-
-  return sendError();
 };
