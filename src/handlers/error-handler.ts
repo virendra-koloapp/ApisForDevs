@@ -8,7 +8,11 @@ export const apiErrorHandler: ErrorRequestHandler = (
   response,
   next
 ) => {
-  response
-    .status(response.statusCode === 200 ? 500 : response.statusCode)
-    .json(error.meta);
+  response.status(response.statusCode === 200 ? 500 : response.statusCode);
+
+  if (error.meta) {
+    response.json(error.meta);
+  } else {
+    response.end();
+  }
 };

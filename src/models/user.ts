@@ -1,11 +1,9 @@
-import mongoose, { Document, SchemaTypes } from "mongoose";
+import mongoose, { SchemaTypes } from "mongoose";
+import { COLLECTION_NAMES, USER_TYPES } from "../constants";
 require("mongoose-type-email");
-import { COLLECTION_NAMES } from "../constants";
-import { func } from "joi";
 
-const ADMIN_TYPE = "ADMIN";
-const CUSTOMER_TYPE = "CUSTOMER";
-const userTypeEnum = [ADMIN_TYPE, CUSTOMER_TYPE];
+const { USER_TYPE_ADMIN, USER_TYPE_CUSTOMER } = USER_TYPES;
+const userTypeEnum = [USER_TYPE_ADMIN, USER_TYPE_CUSTOMER];
 
 const userSchema = new mongoose.Schema(
   {
@@ -22,7 +20,7 @@ const userSchema = new mongoose.Schema(
       type: SchemaTypes.String,
       required: true,
       enum: userTypeEnum,
-      default: CUSTOMER_TYPE,
+      default: USER_TYPE_CUSTOMER,
     },
     password: {
       type: SchemaTypes.String,

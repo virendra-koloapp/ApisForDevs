@@ -11,6 +11,9 @@ import { adminRouter } from "./routers/admin";
 import { APP_CONFIG } from "./constants";
 import { generateMockData } from "./data";
 import { productsRouter } from "./routers/products";
+import { adminAuthMiddleware } from "./middlewares/admin-auth-middleware";
+import { orderRouter } from "./routers/orders";
+import { userAuthMiddleware } from "./middlewares/user-auth-middleware";
 
 const app = express();
 app.use(express.json());
@@ -23,8 +26,10 @@ const apiRouter = express.Router();
 app.use("/api", apiRouter);
 
 apiRouter.use("/accounts", authRouter);
-apiRouter.use("/admin", adminRouter);
 apiRouter.use("/products", productsRouter);
+apiRouter.use("/orders", userAuthMiddleware, orderRouter);
+
+apiRouter.use("/admin", adminAuthMiddleware, adminRouter);
 
 app.use(apiErrorHandler);
 
