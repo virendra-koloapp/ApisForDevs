@@ -12,6 +12,17 @@ export const USER_TYPES = {
   USER_TYPE_CUSTOMER,
 };
 
+export const ORDER_STATUS_CREATED = 0;
+export const ORDER_STATUS_CONFIRMED = 1;
+export const ORDER_STATUS_COMPLETED = 2;
+export const ORDER_STATUS = {
+  ORDER_STATUS_CREATED,
+  ORDER_STATUS_COMPLETED,
+  ORDER_STATUS_CONFIRMED,
+};
+
+export const MAX_ORDER_QUANTITY = 10;
+
 const required = (key: string) =>
   (() => {
     throw new Error(`${key} is required !! `);

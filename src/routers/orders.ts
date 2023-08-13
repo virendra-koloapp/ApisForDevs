@@ -1,8 +1,9 @@
 import express from "express";
-import { getOrdersHandler } from "../handlers/orders";
+import { createOrderHandler, getOrdersHandler } from "../handlers/orders";
 
 const orderRouter = express.Router();
 
 orderRouter.get("/", getOrdersHandler);
+orderRouter.post("/", createOrderHandler);
 
 export { orderRouter };
