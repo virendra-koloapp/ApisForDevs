@@ -85,6 +85,21 @@ const orderSchema = new mongoose.Schema(
 
         return this.find(filter).populate("items.product");
       },
+
+      getOrderById(id: string, userId: string) {
+        if (!mongoose.isValidObjectId(id)) {
+          return null;
+        }
+        return this.findOne({
+          _id: id,
+          user: userId,
+        }).populate([
+          {
+            path: "items.product",
+            populate: "category",
+          },
+        ]);
+      },
     },
   }
 );

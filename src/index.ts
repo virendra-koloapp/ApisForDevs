@@ -16,6 +16,23 @@ import { orderRouter } from "./routers/orders";
 import { userAuthMiddleware } from "./middlewares/user-auth-middleware";
 import { Product } from "./models/product";
 
+import axios from "axios";
+
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+const url =
+  "https://www.flipkart.com/samsung-galaxy-s21-fe-5g-olive-green-128-gb/p/itm56c2ef5daa932?pid=MOBGCKMEMZE5UJXK&lid=LSTMOBGCKMEMZE5UJXK6LPNPI&marketplace=FLIPKART&store=tyy%2F4io&srno=b_1_1&otracker=hp_omu_Top%2BOffers_2_4.dealCard.OMU_6JL4CP46FWFG_3&otracker1=hp_omu_PINNED_neo%2Fmerchandising_Top%2BOffers_NA_dealCard_cc_2_NA_view-all_3&fm=neo%2Fmerchandising&iid=6ed42b0b-e249-4d7b-b120-179db4c5642d.MOBGCKMEMZE5UJXK.SEARCH&ppt=hp&ppn=homepage&ssid=gh3j1det9s0000001691946001272";
+
+// axios.get(url).then((response) => {
+//   const dom = new JSDOM(response.data);
+//   const schema = dom.window.document.querySelectorAll(
+//     "script[type='application/ld+json']"
+//   )[1].innerHTML;
+
+//   console.log(JSON.parse(schema));
+// });
+
 const app = express();
 app.use(express.json());
 app.use(morgan("tiny"));
@@ -26,10 +43,13 @@ const apiRouter = express.Router();
 
 app.use("/api", apiRouter);
 
+// /api/accounts
 apiRouter.use("/accounts", authRouter);
+// /api/products
 apiRouter.use("/products", productsRouter);
+// /api/orders
 apiRouter.use("/orders", userAuthMiddleware, orderRouter);
-
+// /api/admin
 apiRouter.use("/admin", adminAuthMiddleware, adminRouter);
 
 app.use(apiErrorHandler);

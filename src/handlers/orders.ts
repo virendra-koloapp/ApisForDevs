@@ -6,6 +6,7 @@ import { MAX_ORDER_QUANTITY } from "../constants";
 import { ApiError } from "../errors/ApiError";
 import { Product } from "../models/product";
 import HTTP_CODES from "http-status-codes";
+import mongoose from "mongoose";
 
 (Joi as any).objectId = require("joi-objectid")(Joi);
 
@@ -28,6 +29,31 @@ export const getOrdersHandler: Handler = async (_request, response) => {
     response.json(orders);
   });
 };
+
+export const getOrderByIdHandler: Handler = async (
+  _request,
+  response,
+  next
+) => {
+  const request = _request as AuthenticatedRequest;
+  const userId = request.user.id;
+  const orderId = request.params.orderId as string;
+
+  const order = await Order.getOrderById(orderId, userId);
+
+  if (!order) {
+    return next(
+      new ApiError({
+        message: "order not found",
+      })
+    );
+  }
+
+  response.json({
+    order,
+  });
+};
+
 export const createOrderHandler: Handler = async (_request, response, next) => {
   const request = _request as AuthenticatedRequest;
 
