@@ -1,11 +1,13 @@
+import axios from "axios";
 import { Handler } from "express";
+import { JSDOM } from "jsdom";
+import { ApiError } from "../errors/ApiError";
 import { Category } from "../models/category";
+import { Order } from "../models/order";
 import { Product } from "../models/product";
 import { User } from "../models/user";
-import { Order } from "../models/order";
 import { getProductDataFromHTML } from "../utils/flipkart";
-import axios from "axios";
-import { ApiError } from "../errors/ApiError";
+import { getHTML } from "../utils/http";
 
 export const getAllUsersHandler: Handler = (request, response) => {
   User.find().then((users) => {
@@ -37,17 +39,19 @@ export const importProductFromFlipkartHandler: Handler = async (
       })
     );
   }
-  axios.get(request.body.url).then(async (response) => {
-    const rawProduct = getProductDataFromHTML(response.data);
+  try {
+    const response = await axios.get(request.body.url);
+    const html = response.data;
 
-    console.log(rawProduct);
+    const rawProduct = getProductDataFromHTML(html);
+
     let category = await Category.findOne({
       title: rawProduct?.category,
     });
 
     const product = new Product({
       active: true,
-      discount: rawProduct?.dicount || 0,
+      discount: rawProduct?.discount || 0,
       title: rawProduct?.title,
       description: rawProduct?.description,
       images: [
@@ -68,10 +72,68 @@ export const importProductFromFlipkartHandler: Handler = async (
 
     product.category = category._id;
 
-    product.save().then((p) => {
-      apiResponse.status(201).json({ product: p });
-    });
-  });
+    const newProduct = await product.save();
+    apiResponse.status(201).json({ product: newProduct });
+  } catch (error) {
+    return next(
+      new ApiError({
+        message: `couldn't import product`,
+        error,
+      })
+    );
+  }
+};
+
+export const listUrlsOfAPageHandler: Handler = async (
+  request,
+  apiResponse,
+  next
+) => {
+  if (!request.body.url) {
+    apiResponse.status(400);
+    return next(
+      new ApiError({
+        message: "url is required",
+      })
+    );
+  }
+
+  try {
+    const url = request.body.url;
+    const html = await getHTML(url);
+    const dom = new JSDOM(html);
+    const anchors = Array.from(dom.window.document.querySelectorAll("a"));
+
+    const urlObj = new URL(url);
+    const host = urlObj.host;
+    const protocol = urlObj.protocol;
+
+    let links: string[] = [];
+
+    if (host.includes("flipkart")) {
+      links = links.concat(
+        anchors
+          .map((anchor) => anchor.href)
+          .filter((url) => url.includes("pid"))
+          .map((url) => {
+            try {
+              new URL(url);
+            } catch (error) {
+              return `${protocol}//${host}${url}`;
+            }
+          }) as string[]
+      );
+    }
+
+    apiResponse.json({ links });
+  } catch (error) {
+    return next(
+      new ApiError({
+        message: `couldn't import links`,
+        error,
+      })
+    );
+  }
 };
 
 export const getAllOrdersHandler: Handler = async (request, response) => {

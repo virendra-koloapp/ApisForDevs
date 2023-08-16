@@ -21,8 +21,8 @@ export const getProductDataFromHTML = (html: string) => {
     return (document?.querySelector(query) as HTMLImageElement).src;
   };
 
-  const getValue = ({ query = "", isNumber = false, multple = false }) => {
-    if (!multple && document) {
+  const getValue = ({ query = "", isNumber = false, multiple = false }) => {
+    if (!multiple && document) {
       const value = document.querySelector(query)?.textContent || "";
       if (isNumber) {
         return +value?.replace?.(/[^0-9]/g, "");
@@ -52,15 +52,15 @@ export const getProductDataFromHTML = (html: string) => {
     isNumber: true,
   });
   const title = getValue({ query: CLASSES.TITLE });
-  const dicount = getValue({ query: CLASSES.DISCOUNT, isNumber: true });
+  const discount = getValue({ query: CLASSES.DISCOUNT, isNumber: true });
 
   const specKeys = getValue({
     query: CLASSES.SPECIFICATION_KEY,
-    multple: true,
+    multiple: true,
   }) as string[];
   const specValues = getValue({
     query: CLASSES.SPECIFICATION_VALUE,
-    multple: true,
+    multiple: true,
   }) as string[];
   const image = getImageUrl(CLASSES.IMAGE);
 
@@ -85,7 +85,7 @@ export const getProductDataFromHTML = (html: string) => {
     title,
     specifications,
     image,
-    dicount,
+    discount,
     description: description || title,
     category,
   };
