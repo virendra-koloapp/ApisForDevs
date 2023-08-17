@@ -1,174 +1,373 @@
 {
-	"info": {
-		"_postman_id": "aee5634e-f7dd-4207-b011-651fc475a4ce",
-		"name": "store",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "24921016"
-	},
-	"item": [
-		{
-			"name": "admin",
-			"item": [
-				{
-					"name": "getAllCategories",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{ADMIN_AUTH}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{HOST}}/api/admin/categories"
-					},
-					"response": []
-				},
-				{
-					"name": "getAllProducts",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{ADMIN_AUTH}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{HOST}}/api/admin/products"
-					},
-					"response": []
-				},
-				{
-					"name": "getAllUsers",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{ADMIN_AUTH}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{HOST}}/api/admin/users"
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456789\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "{{HOST}}/api/accounts/login"
-			},
-			"response": []
-		},
-		{
-			"name": "Register",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456789\", \n    \"name\" : \"virendra patel admin\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "{{HOST}}/api/accounts/register"
-			},
-			"response": []
-		},
-		{
-			"name": "getProducts",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{HOST}}/api/products?limit=5&page=1&category=64d3b9d7b397310ba2aa4722&q=car",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"api",
-						"products"
-					],
-					"query": [
-						{
-							"key": "limit",
-							"value": "5"
-						},
-						{
-							"key": "page",
-							"value": "1"
-						},
-						{
-							"key": "category",
-							"value": "64d3b9d7b397310ba2aa4722"
-						},
-						{
-							"key": "q",
-							"value": "car"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getOrders",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": {
-						"token": "{{ADMIN_AUTH}}"
-					}
-				},
-				"method": "GET",
-				"header": [],
-				"url": "{{HOST}}/api/orders"
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "HOST",
-			"value": "localhost:3000",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "249fe6fa-2134-47be-a94d-ff9934132fc4",
+    "name": "store",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28889687"
+  },
+  "item": [
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "getAllCategories",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_AUTH}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/admin/categories",
+              "host": ["{{HOST}}"],
+              "path": ["api", "admin", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllProducts",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_AUTH}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/admin/products",
+              "host": ["{{HOST}}"],
+              "path": ["api", "admin", "products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "importFromFlipkart",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_AUTH}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"url\" : \"https://www.flipkart.com/ak-toys-3-feet-red-teddy-approx-90-cm-high-quality-bear-someone-special-1/p/itm91abcd0483b97?pid=STFG9KGFPAHC2QZV&lid=LSTSTFG9KGFPAHC2QZVKXHNIE&marketplace=FLIPKART&store=tng%2Fclb&srno=b_1_6&otracker=nmenu_sub_Baby%20%26%20Kids_0_Soft%20Toys&fm=organic&iid=268a97cf-b849-4be6-b767-41ca3e6bdb17.STFG9KGFPAHC2QZV.SEARCH&ppt=browse&ppn=browse\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/admin/products/import/flipkart",
+              "host": ["{{HOST}}"],
+              "path": ["api", "admin", "products", "import", "flipkart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listUrlsOfAPage",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_AUTH}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"url\" : \"https://www.flipkart.com/ak-toys-3-feet-red-teddy-approx-90-cm-high-quality-bear-someone-special-1/p/itm91abcd0483b97?pid=STFG9KGFPAHC2QZV&lid=LSTSTFG9KGFPAHC2QZVKXHNIE&marketplace=FLIPKART&store=tng%2Fclb&srno=b_1_6&otracker=nmenu_sub_Baby%20%26%20Kids_0_Soft%20Toys&fm=organic&iid=268a97cf-b849-4be6-b767-41ca3e6bdb17.STFG9KGFPAHC2QZV.SEARCH&ppt=browse&ppn=browse\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/admin/products/import/list-urls",
+              "host": ["{{HOST}}"],
+              "path": ["api", "admin", "products", "import", "list-urls"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllUsers",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_AUTH}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/admin/users",
+              "host": ["{{HOST}}"],
+              "path": ["api", "admin", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllOrders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{ADMIN_AUTH}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/admin/orders?status=0&user=64d53012319d01d674cb9b62",
+              "host": ["{{HOST}}"],
+              "path": ["api", "admin", "orders"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "0"
+                },
+                {
+                  "key": "user",
+                  "value": "64d53012319d01d674cb9b62"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456789\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{HOST}}/api/accounts/login",
+          "host": ["{{HOST}}"],
+          "path": ["api", "accounts", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456789\", \n    \"name\" : \"virendra patel admin\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{HOST}}/api/accounts/register",
+          "host": ["{{HOST}}"],
+          "path": ["api", "accounts", "register"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getProducts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{HOST}}/api/products?limit=5&page=1&category=64d3b9d7b397310ba2aa4722&q=car",
+          "host": ["{{HOST}}"],
+          "path": ["api", "products"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "category",
+              "value": "64d3b9d7b397310ba2aa4722"
+            },
+            {
+              "key": "q",
+              "value": "car"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getOrders",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_AUTH}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{HOST}}/api/orders",
+          "host": ["{{HOST}}"],
+          "path": ["api", "orders"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getOrderById",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{USER_AUTH}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{HOST}}/api/orders/64d721f9b7fe1e89b076041c",
+          "host": ["{{HOST}}"],
+          "path": ["api", "orders", "64d721f9b7fe1e89b076041c"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createOrder",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ADMIN_AUTH}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"items\": [\n        {\n            \"product\": \"98e1a4ca3b5fb5bcee899de3\",\n            \"quantity\": 1\n        },\n        {\n            \"product\": \"8c5dafa0d4faf152cfa2c58a\",\n            \"quantity\": 2\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{HOST}}/api/orders",
+          "host": ["{{HOST}}"],
+          "path": ["api", "orders"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "HOST",
+      "value": "localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "ADMIN_AUTH",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDUzMDEyMzE5ZDAxZDY3NGNiOWI2MiIsInR5cGUiOiJBRE1JTiIsImlhdCI6MTY5MTY5MzEwOX0.utAfqBNO3d_ZdWiz7mYDoscbcE-TqdO6ALgmAo7XetY",
+      "type": "string"
+    },
+    {
+      "key": "USER_AUTH",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDUzMDEyMzE5ZDAxZDY3NGNiOWI2MiIsInR5cGUiOiJBRE1JTiIsImlhdCI6MTY5MTY5MzEwOX0.utAfqBNO3d_ZdWiz7mYDoscbcE-TqdO6ALgmAo7XetY",
+      "type": "string"
+    }
+  ]
 }
