@@ -1,0 +1,71 @@
+{
+  "info": {
+    "_postman_id": "1cf600d3-8efa-4819-95f9-93ef1f710787",
+    "name": "Store-json-db",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "28889687"
+  },
+  "item": [
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "getAllUsers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/api/admin/users?search=ad",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "admin", "users"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "ad"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "RegisterUser",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"virendra14@gmail.com\",\n    \"firstName\": \"virendra\",\n    \"lastName\": \"patel\",\n    \"password\" : \"123456789\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:3000/api/accounts/register"
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\" : \"123456789\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:3000/api/accounts/login"
+      },
+      "response": []
+    }
+  ]
+}
