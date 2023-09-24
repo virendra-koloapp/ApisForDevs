@@ -21,7 +21,7 @@ export const loginHandler: Handler = (request, response) => {
     .then((payload) => {
       response.json(payload);
     })
-    .catch((error) => {̦
+    .catch((error) => {
       return response.status(400).json({
         message: error.message,
         ...error,

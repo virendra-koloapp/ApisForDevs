@@ -25,7 +25,7 @@ class User {
   static createUser(newUser: Partial<User>) {
     const toSave = {
       ...newUser,
-      password: passwordHash.generate(newUser.password),
+      password: passwordHash.generate(newUser.password || ""),
       id: shortId(),
     };
     return UsersDB.find("/", (user) => {

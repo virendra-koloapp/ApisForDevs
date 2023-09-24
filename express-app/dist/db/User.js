@@ -13,7 +13,7 @@ class User {
         this.id = value.id || shortId();
     }
     static createUser(newUser) {
-        const toSave = Object.assign(Object.assign({}, newUser), { password: passwordHash.generate(newUser.password), id: shortId() });
+        const toSave = Object.assign(Object.assign({}, newUser), { password: passwordHash.generate(newUser.password || ""), id: shortId() });
         return UsersDB.find("/", (user) => {
             return user.email == toSave.email;
         }).then((user) => {
